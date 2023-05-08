@@ -130,11 +130,104 @@ O Python oferece um recurso chamado de ambiente virtual, onde permite sua máqui
 
 ## Uso
 - ting_file_management/queue.py
-    **Class Queue**
+    * **Class Queue**
+        - A fila (Queue) é uma estrutura FIFO, ou seja, o primeiro item a entrar, deve ser o primeiro a sair. Utilizando conhecimentos de estruturas de dados para otimizar as operações implementadas.
+        - A fila possui os métodos de inserção (enqueue), remoção (dequeue) e busca (search).
+
+- ting_file_management/file_management.py
+    * **txt_importer(path_file: str):**
+
+- ting_file_management/file_process.py
+    * **process**
+       
+       ```
+       def process(path_file: str, instance: Queue):
+          for item in list(instance.data):
+              if item["nome_do_arquivo"] == path_file:
+                  return
+          txt = txt_importer(path_file)
+          data = {
+              "nome_do_arquivo": path_file,
+              "qtd_linhas": len(txt),
+              "linhas_do_arquivo": txt,
+          }
+          instance.enqueue(data)
+          print(data, file=sys.stdout)
+       ```
+       
+    * **remove**
+        
+        ```
+        def remove(instance: Queue):
+            try:
+                data: dict = instance.dequeue()
+                path = data["nome_do_arquivo"]
+                print(f"Arquivo { path } removido com sucesso", file=sys.stdout)
+            except IndexError:
+                print("Não há elementos", file=sys.stdout)
+        ```
+       
+    * **file_metadata**
+        
+        ```
+        def file_metadata(instance: Queue, position: int):
+          try:
+              data = instance.search(position)
+              print(data, file=sys.stdout)
+          except IndexError:
+              print("Posição inválida", file=sys.stderr)
+        ```
+        
+
+- ting_word_searches/word_search.py
+    * **exists_word**
+        ```
+        def exists_word(word: str, instance: Queue):
+            result = list()
+            for data in list(instance.data):
+                occurrences = list()
+                for index in range(len(data["linhas_do_arquivo"])):
+                    if word.lower() in data["linhas_do_arquivo"][index].lower():
+                        occurrences.append({"linha": (index + 1)})
+            
+            if len(occurrences):
+                result.append(
+                    {
+                        "palavra": word,
+                        "arquivo": data["nome_do_arquivo"],
+                        "ocorrencias": occurrences,
+                    }
+                )
+
+          return result
+      ```
+    * **search_by_word**
+
+        ```
+        def search_by_word(word: str, instance: Queue):
+            result = list()
+            for data in list(instance.data):
+                occurrences = list()
+                for index in range(len(data["linhas_do_arquivo"])):
+                    if word.lower() in data["linhas_do_arquivo"][index].lower():
+                        occurrences.append(
+                            {
+                                "linha": (index + 1),
+                                "conteudo": data["linhas_do_arquivo"][index],
+                            }
+                        )
     
-    * A fila (Queue) é uma estrutura FIFO, ou seja, o primeiro item a entrar, deve ser o primeiro a sair. Utilizando conhecimentos de estruturas de dados para otimizar as operações implementadas.
-    * A fila possui os métodos de inserção (enqueue), remoção (dequeue) e busca (search).
-- 
+                if len(occurrences):
+                    result.append(
+                        {
+                            "palavra": word,
+                            "arquivo": data["nome_do_arquivo"],
+                            "ocorrencias": occurrences,
+                        }
+                    )
+
+            return result
+        ```
 
 <p align="right">(<a href="#readme-top">voltar ao topo</a>)</p>
 
