@@ -136,7 +136,11 @@ O Python oferece um recurso chamado de ambiente virtual, onde permite sua máqui
 
 - ting_file_management/file_management.py
     * **txt_importer**
-        
+        - Caso o arquivo TXT não exista, exibe a mensagem "Arquivo {path_file} não encontrado" na stderr, em que {path_file} é o caminho do arquivo;
+        - Caso a extensão do arquivo seja diferente de .txt, exibe a mensagem Formato inválido na stderr;
+        - A função retorna uma lista contendo as linhas do arquivo.
+
+
         ```
         def txt_importer(path_file):
             if not path_file[-4:] == ".txt":
@@ -171,6 +175,14 @@ O Python oferece um recurso chamado de ambiente virtual, onde permite sua máqui
        - A função processa o arquivo passado por parâmetro (ou seja, gerar um dicionário com o formato e informações especificadas abaixo);
        - Ignora arquivos que já tenham sido processados anteriormente (ou seja, arquivos com o mesmo nome e caminho (nome_do_arquivo) não são adicionados à fila novamente);
        - Após cada nova inserção válida, a função mostra via stdout os dados processados, conforme estrutura no exemplo abaixo.
+       - **Exemplo da estrutura de saída**
+          ```
+          {
+              "nome_do_arquivo": "arquivo_teste.txt", # Caminho do arquivo recém adicionado
+              "qtd_linhas": 3,                        # Quantidade de linhas existentes no arquivo
+              "linhas_do_arquivo": [...]              # linhas retornadas pela função txt_importer
+          }
+          ```
        
     * **remove**
         - A função irá receber como parâmetro a instância da fila(Queue).
