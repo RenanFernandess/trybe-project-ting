@@ -12,7 +12,7 @@ Não deixe de usar nossas dicas de escrita de README de projetos, e deixe sua cr
 - quais arquivos/pastas foram desenvolvidos por outra pessoa estudante;
 - quais arquivos/pastas foram desenvolvidos pela Trybe.
 -->
-# 
+# Boas-vindas ao repositório do TING (Trybe is not Google)!
 
 <details>
   <summary>Índice</summary>
@@ -38,10 +38,18 @@ Não deixe de usar nossas dicas de escrita de README de projetos, e deixe sua cr
 </details>
 
 ## Sobre o Projeto
- 
+Neste projeto foi responsável por implementar um programa que simula um algoritmo de indexação de documentos similar ao do Google. Seu programa deverá ser capaz de identificar ocorrências de termos em arquivos TXT.
+
+**Para isso, foi desenvolvido deverá ter dois módulos:**
+- Módulo de gerenciamento de arquivos que permite anexar arquivos de texto (formato TXT) e;
+- Módulo de buscas que permite operar funções de busca sobre os arquivos anexados.
+
 
 ### Habilidades trabalhadas
-
+- Manipular Pilhas;
+- Manipular Deque;
+- Manipular Nó & Listas Ligadas e;
+- Manipular Listas Duplamente Ligadas.
 
 ### Construido Com
 
@@ -56,11 +64,11 @@ Não deixe de usar nossas dicas de escrita de README de projetos, e deixe sua cr
 
 1. Clonar o repositorio
 
-        git clone 
+        git clone git@github.com:RenanFernandess/trybe-project-ting.git
 
 2. Entrar na pasta project-job-insights
 
-        cd ./trybe-
+        cd ./trybe-project-ting
 
 ### Ambiente virtual
 
