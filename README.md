@@ -150,53 +150,97 @@ O Python oferece um recurso chamado de ambiente virtual, onde permite sua máqui
 
 - ting_file_management/file_process.py
     * **process**
-       
-        ```
-        def process(path_file: str, instance: Queue):
-            for item in list(instance.data):
-                if item["nome_do_arquivo"] == path_file:
-                    return
-            txt = txt_importer(path_file)
-            data = {
-                "nome_do_arquivo": path_file,
-                "qtd_linhas": len(txt),
-                "linhas_do_arquivo": txt,
-            }
-            instance.enqueue(data)
-            print(data, file=sys.stdout)
-       ```
+        - A função irá receber como parâmetro um objeto instanciado da fila(Queue) e o caminho para um arquivo;
+             
+             ```
+             def process(path_file: str, instance: Queue):
+                 for item in list(instance.data):
+                     if item["nome_do_arquivo"] == path_file:
+                         return
+                 txt = txt_importer(path_file)
+                 data = {
+                     "nome_do_arquivo": path_file,
+                     "qtd_linhas": len(txt),
+                     "linhas_do_arquivo": txt,
+                 }
+                 instance.enqueue(data)
+                 print(data, file=sys.stdout)
+            ```
+
+       - A instância da fila recebida por parâmetro é utilizada para registrar o processamento dos arquivos;
+       - A função processa o arquivo passado por parâmetro (ou seja, gerar um dicionário com o formato e informações especificadas abaixo);
+       - Ignora arquivos que já tenham sido processados anteriormente (ou seja, arquivos com o mesmo nome e caminho (nome_do_arquivo) não são adicionados à fila novamente);
+       - Após cada nova inserção válida, a função mostra via stdout os dados processados, conforme estrutura no exemplo abaixo.
        
     * **remove**
-        
-        ```
-        def remove(instance: Queue):
-            try:
-                data: dict = instance.dequeue()
-                path = data["nome_do_arquivo"]
-                print(f"Arquivo { path } removido com sucesso", file=sys.stdout)
-            except IndexError:
-                print("Não há elementos", file=sys.stdout)
-        ```
+        - A função irá receber como parâmetro a instância da fila(Queue).
+            
+            ```
+            def remove(instance: Queue):
+                try:
+                    data: dict = instance.dequeue()
+                    path = data["nome_do_arquivo"]
+                    print(f"Arquivo { path } removido com sucesso", file=sys.stdout)
+                except IndexError:
+                    print("Não há elementos", file=sys.stdout)
+            ```
+
+        - Caso não existam arquivos na fila, a função emite a mensagem "Não há elementos" via stdout;
+        - Em caso de sucesso de remoção, emite a mensagem "Arquivo {path_file} removido com sucesso" via stdout, em que {path_file} é o caminho do arquivo.
        
     * **file_metadata**
-        
-        ```
-        def file_metadata(instance: Queue, position: int):
-          try:
-              data = instance.search(position)
-              print(data, file=sys.stdout)
-          except IndexError:
-              print("Posição inválida", file=sys.stderr)
-        ```
+        - A função irá receber como parâmetro a instância da fila(Queue) e o índice a ser buscado;
+            
+            ```
+            def file_metadata(instance: Queue, position: int):
+                try:
+                    data = instance.search(position)
+                    print(data, file=sys.stdout)
+                except IndexError:
+                    print("Posição inválida", file=sys.stderr)
+             ```
+
+        - Caso a posição não exista, exibe a mensagem de erro "Posição inválida" via stderr;
+        - Caso a posição seja válida, as informações relacionadas ao arquivo serão mostradas via stdout, seguindo o exemplo de estrutura abaixo.
+        - Exemplo da estrutura de saída em caso de sucesso:
+             ```
+             {
+                 "nome_do_arquivo": "arquivo_teste.txt",
+                 "qtd_linhas": 3,
+                 "linhas_do_arquivo": [...]
+             }
+             ```
         
 
 - ting_word_searches/word_search.py
     * **exists_word**
         - A função irá receber como parâmetros a palavra a ser buscada e a instância da fila(Queue);
+            
+            ```
+            def exists_word(word: str, instance: Queue):
+                result = list()
+                for data in list(instance.data):
+                    occurrences = list()
+                    for index in range(len(data["linhas_do_arquivo"])):
+                        if word.lower() in data["linhas_do_arquivo"][index].lower():
+                            occurrences.append({"linha": (index + 1)})
+            
+                if len(occurrences):
+                    result.append(
+                        {
+                            "palavra": word,
+                            "arquivo": data["nome_do_arquivo"],
+                            "ocorrencias": occurrences,
+                        }
+                    )
+
+              return result
+            ```
+
         - A função retorna uma lista com as informações de cada arquivo e suas linhas em que a palavra foi encontrada, conforme exemplo da estrutura de retorno;
         - A busca é case insensitive (não diferenciar maiúsculas e minúsculas);
         - **Exemplo da estrutura de retorno**
-            
+
             ```
             [{
                 "palavra": "de",
@@ -208,33 +252,39 @@ O Python oferece um recurso chamado de ambiente virtual, onde permite sua máqui
              }]
             ```
 
-        ```
-        def exists_word(word: str, instance: Queue):
-            result = list()
-            for data in list(instance.data):
-                occurrences = list()
-                for index in range(len(data["linhas_do_arquivo"])):
-                    if word.lower() in data["linhas_do_arquivo"][index].lower():
-                        occurrences.append({"linha": (index + 1)})
-            
-            if len(occurrences):
-                result.append(
-                    {
-                        "palavra": word,
-                        "arquivo": data["nome_do_arquivo"],
-                        "ocorrencias": occurrences,
-                    }
-                )
-
-          return result
-      ```
-
     * **search_by_word**
         - A função irá receber como parâmetros a palavra a ser buscada e a instância da fila(Queue);
+        
+            ```
+            def search_by_word(word: str, instance: Queue):
+                result = list()
+                for data in list(instance.data):
+                    occurrences = list()
+                    for index in range(len(data["linhas_do_arquivo"])):
+                        if word.lower() in data["linhas_do_arquivo"][index].lower():
+                            occurrences.append(
+                                {
+                                    "linha": (index + 1),
+                                    "conteudo": data["linhas_do_arquivo"][index],
+                                }
+                            )
+    
+                    if len(occurrences):
+                        result.append(
+                            {
+                                "palavra": word,
+                                "arquivo": data["nome_do_arquivo"],
+                                "ocorrencias": occurrences,
+                            }
+                        )
+
+                return result
+            ```
+
         - A função retorna uma lista com as informações de cada arquivo e suas linhas em que a palavra foi encontrada, conforme exemplo da estrutura de retorno;
         - A busca é case insensitive (não diferenciar maiúsculas e minúsculas);
         - **Exemplo da estrutura de retorno**
-            
+
             ```
             [{
                 "palavra": "de",
@@ -251,32 +301,7 @@ O Python oferece um recurso chamado de ambiente virtual, onde permite sua máqui
                 ]
              }]
             ```
-        
-        ```
-        def search_by_word(word: str, instance: Queue):
-            result = list()
-            for data in list(instance.data):
-                occurrences = list()
-                for index in range(len(data["linhas_do_arquivo"])):
-                    if word.lower() in data["linhas_do_arquivo"][index].lower():
-                        occurrences.append(
-                            {
-                                "linha": (index + 1),
-                                "conteudo": data["linhas_do_arquivo"][index],
-                            }
-                        )
-    
-                if len(occurrences):
-                    result.append(
-                        {
-                            "palavra": word,
-                            "arquivo": data["nome_do_arquivo"],
-                            "ocorrencias": occurrences,
-                        }
-                    )
 
-            return result
-        ```
 
 <p align="right">(<a href="#readme-top">voltar ao topo</a>)</p>
 
