@@ -192,6 +192,22 @@ O Python oferece um recurso chamado de ambiente virtual, onde permite sua máqui
 
 - ting_word_searches/word_search.py
     * **exists_word**
+        - A função irá receber como parâmetros a palavra a ser buscada e a instância da fila(Queue);
+        - A função retorna uma lista com as informações de cada arquivo e suas linhas em que a palavra foi encontrada, conforme exemplo da estrutura de retorno;
+        - A busca é case insensitive (não diferenciar maiúsculas e minúsculas);
+        - **Exemplo da estrutura de retorno**
+            
+            ```
+            [{
+                "palavra": "de",
+                "arquivo": "arquivo_teste.txt",
+                "ocorrencias": [
+                    { "linha": 2 },
+                    { "linha": 7 }
+                ]
+             }]
+            ```
+
         ```
         def exists_word(word: str, instance: Queue):
             result = list()
@@ -212,8 +228,30 @@ O Python oferece um recurso chamado de ambiente virtual, onde permite sua máqui
 
           return result
       ```
-    * **search_by_word**
 
+    * **search_by_word**
+        - A função irá receber como parâmetros a palavra a ser buscada e a instância da fila(Queue);
+        - A função retorna uma lista com as informações de cada arquivo e suas linhas em que a palavra foi encontrada, conforme exemplo da estrutura de retorno;
+        - A busca é case insensitive (não diferenciar maiúsculas e minúsculas);
+        - **Exemplo da estrutura de retorno**
+            
+            ```
+            [{
+                "palavra": "de",
+                "arquivo": "arquivo_teste.txt",
+                "ocorrencias": [
+                    {
+                        "linha": 3,
+                        "conteudo": "Acima de tudo,"
+                    },
+                    {
+                        "linha": 4,
+                        "conteudo": "é fundamental ressaltar que a adoção de políticas descentralizadoras nos obriga"
+                    }
+                ]
+             }]
+            ```
+        
         ```
         def search_by_word(word: str, instance: Queue):
             result = list()
