@@ -151,19 +151,19 @@ O Python oferece um recurso chamado de ambiente virtual, onde permite sua máqui
 - ting_file_management/file_process.py
     * **process**
        
-       ```
-       def process(path_file: str, instance: Queue):
-          for item in list(instance.data):
-              if item["nome_do_arquivo"] == path_file:
-                  return
-          txt = txt_importer(path_file)
-          data = {
-              "nome_do_arquivo": path_file,
-              "qtd_linhas": len(txt),
-              "linhas_do_arquivo": txt,
-          }
-          instance.enqueue(data)
-          print(data, file=sys.stdout)
+        ```
+        def process(path_file: str, instance: Queue):
+            for item in list(instance.data):
+                if item["nome_do_arquivo"] == path_file:
+                    return
+            txt = txt_importer(path_file)
+            data = {
+                "nome_do_arquivo": path_file,
+                "qtd_linhas": len(txt),
+                "linhas_do_arquivo": txt,
+            }
+            instance.enqueue(data)
+            print(data, file=sys.stdout)
        ```
        
     * **remove**
