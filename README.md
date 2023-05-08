@@ -129,7 +129,12 @@ O Python oferece um recurso chamado de ambiente virtual, onde permite sua máqui
 <p align="right">(<a href="#readme-top">voltar ao topo</a>)</p>
 
 ## Uso
-
+- ting_file_management/queue.py
+    **Class Queue**
+    
+    * A fila (Queue) é uma estrutura FIFO, ou seja, o primeiro item a entrar, deve ser o primeiro a sair. Utilizando conhecimentos de estruturas de dados para otimizar as operações implementadas.
+    * A fila possui os métodos de inserção (enqueue), remoção (dequeue) e busca (search).
+- 
 
 <p align="right">(<a href="#readme-top">voltar ao topo</a>)</p>
 
