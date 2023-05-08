@@ -135,7 +135,18 @@ O Python oferece um recurso chamado de ambiente virtual, onde permite sua máqui
         - A fila possui os métodos de inserção (enqueue), remoção (dequeue) e busca (search).
 
 - ting_file_management/file_management.py
-    * **txt_importer(path_file: str):**
+    * **txt_importer**
+        
+        ```
+        def txt_importer(path_file):
+            if not path_file[-4:] == ".txt":
+                return print("Formato inválido", file=sys.stderr)
+            try:
+                with open(path_file) as file:
+                    return [line.removesuffix("\n") for line in file]
+            except FileNotFoundError:
+                return print(f"Arquivo {path_file} não encontrado", file=sys.stderr)
+        ```
 
 - ting_file_management/file_process.py
     * **process**
