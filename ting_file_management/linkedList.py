@@ -1,8 +1,8 @@
-from node import Node
+from ting_file_management.node import Node
 
 
 class LinkedList:
-    def __init__(self, value) -> None:
+    def __init__(self, value=None) -> None:
         self.__length = 0
         self.__head, self.__tail = None, None
         self.__curr = None
@@ -101,3 +101,12 @@ class LinkedList:
 
     def get_last(self):
         return self.__tail.value
+
+
+# li = LinkedList(["x", "a", "b", "l", "a", "u"])
+# li.pop()
+# li.add("a")
+# li.extend(["u", "u"])
+# li.pop(-1)
+# print(li.pop(2))
+# print(list(li))
