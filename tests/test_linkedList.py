@@ -29,3 +29,13 @@ def test_if_it_is_possible_to_start_the_list_with_values(values_list):
 
     assert li.get_first() == "test"
     assert li.get_last() == "test"
+
+
+def test_if_it_is_possible_to_extend_the_linked_list(values_list):
+    list_one = LinkedList(values_list)
+    list_two = LinkedList(["test", "one", "two", "three"])
+
+    list_one.extend(list_two)
+
+    assert list_one.get_first() == "x"
+    assert list_one.get_last() == "three"
