@@ -39,17 +39,19 @@ class LinkedList:
         node.next.prev = node.prev
         return node.value
 
-    def __iterate_left(self, stop: int, start=0):
+    def __iterate_left(self, stop: int):
         """o(n)"""
         node = self.__head.next
+        start = 1
         while start < stop:
             start += 1
             node = node.next
         return node
 
-    def __iterate_right(self, stop: int, start=-1):
+    def __iterate_right(self, stop: int):
         """o(n)"""
         node = self.__tail.prev
+        start = -2
         while start > stop:
             start -= 1
             node = node.prev
@@ -58,8 +60,8 @@ class LinkedList:
     def __iterate(self, index: int):
         """o(n)"""
         if index < -1:
-            return self.__iterate_right(index, start=1)
-        return self.__iterate_left(index, start=-2)
+            return self.__iterate_right(index)
+        return self.__iterate_left(index)
 
     def extend(self, list):
         """LinkedList = o(1)
