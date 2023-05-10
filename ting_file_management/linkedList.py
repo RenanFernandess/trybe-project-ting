@@ -33,8 +33,13 @@ class LinkedList:
         self.__tail = node
 
     def extend(self, list):
-        for value in list:
-            self.add(value)
+        if isinstance(list, LinkedList):
+            self.__tail.next = list.__head
+            list.__head.prev = self.__tail
+            self.__tail = list.__tail
+        else:
+            for value in list:
+                self.add(value)
 
     def add(self, value):
         if self.__tail:
@@ -101,12 +106,3 @@ class LinkedList:
 
     def get_last(self):
         return self.__tail.value
-
-
-# li = LinkedList(["x", "a", "b", "l", "a", "u"])
-# li.pop()
-# li.add("a")
-# li.extend(["u", "u"])
-# li.pop(-1)
-# print(li.pop(2))
-# print(list(li))
