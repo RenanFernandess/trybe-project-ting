@@ -70,6 +70,7 @@ class LinkedList:
             self.__tail.next = list.__head
             list.__head.prev = self.__tail
             self.__tail = list.__tail
+            self.__length += list.__length
         else:
             for value in list:
                 self.add(value)
@@ -127,6 +128,7 @@ class LinkedList:
         return self.__tail.value
 
     def get(self, index=0):
+        """o(n)"""
         if not (index > (0 - self.__length) and index < self.__length):
             raise IndexError
         if index == -1:
