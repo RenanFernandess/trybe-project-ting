@@ -123,3 +123,12 @@ class LinkedList:
     def get_last(self):
         """o(1)"""
         return self.__tail.value
+
+    def get(self, index=0):
+        if not (index > (0 - self.__length) and index < self.__length):
+            raise IndexError
+        if index == -1:
+            return self.get_last()
+        if index == 0:
+            return self.get_first()
+        return self.__iterate(index).value
