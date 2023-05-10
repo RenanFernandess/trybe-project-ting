@@ -100,14 +100,14 @@ class LinkedList:
         first = self.__head
         self.__head = self.__head.next
         self.__head.prev = None
-        return first
+        return first.value
 
     def pop_last(self):
         """o(1)"""
         last = self.__tail
         self.__tail = self.__tail.prev
         self.__tail.next = None
-        return last
+        return last.value
 
     def pop(self, index=0):
         """o(n)"""
