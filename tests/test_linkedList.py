@@ -34,6 +34,17 @@ def test_if_it_is_possible_to_start_the_list_with_values(values_list):
     assert len(li) == 1
 
 
+def test_if_it_is_possible_to_remove_the_first_and_last_item_from_the_list(
+    values_list,
+):
+    li = LinkedList(values_list)
+
+    assert len(li) == 6
+    assert li.pop_first() == "x"
+    assert li.pop_last() == "u"
+    assert len(li) == 4
+
+
 def test_if_the_linked_list_is_iterable(values_list):
     li = LinkedList(values_list)
 
